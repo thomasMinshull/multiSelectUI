@@ -13,6 +13,8 @@
 		554766CB1EC6751200DC47A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 554766CA1EC6751200DC47A9 /* Assets.xcassets */; };
 		554766CE1EC6751200DC47A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 554766CC1EC6751200DC47A9 /* LaunchScreen.storyboard */; };
 		554766D91EC6751300DC47A9 /* MultiSelectComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554766D81EC6751300DC47A9 /* MultiSelectComponentTests.swift */; };
+		554766E41EC6758200DC47A9 /* MultiSelectComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554766E31EC6758200DC47A9 /* MultiSelectComponent.xib */; };
+		554766E61EC6794500DC47A9 /* MultiSelectTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554766E51EC6794500DC47A9 /* MultiSelectTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,8 @@
 		554766D41EC6751300DC47A9 /* MultiSelectComponentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MultiSelectComponentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		554766D81EC6751300DC47A9 /* MultiSelectComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectComponentTests.swift; sourceTree = "<group>"; };
 		554766DA1EC6751300DC47A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		554766E31EC6758200DC47A9 /* MultiSelectComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiSelectComponent.xib; sourceTree = "<group>"; };
+		554766E51EC6794500DC47A9 /* MultiSelectTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiSelectTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,8 @@
 			children = (
 				554766C31EC6751200DC47A9 /* AppDelegate.swift */,
 				554766C51EC6751200DC47A9 /* ViewController.swift */,
+				554766E51EC6794500DC47A9 /* MultiSelectTableView.swift */,
+				554766E31EC6758200DC47A9 /* MultiSelectComponent.xib */,
 				554766C71EC6751200DC47A9 /* Main.storyboard */,
 				554766CA1EC6751200DC47A9 /* Assets.xcassets */,
 				554766CC1EC6751200DC47A9 /* LaunchScreen.storyboard */,
@@ -184,6 +190,7 @@
 				554766CE1EC6751200DC47A9 /* LaunchScreen.storyboard in Resources */,
 				554766CB1EC6751200DC47A9 /* Assets.xcassets in Resources */,
 				554766C91EC6751200DC47A9 /* Main.storyboard in Resources */,
+				554766E41EC6758200DC47A9 /* MultiSelectComponent.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				554766E61EC6794500DC47A9 /* MultiSelectTableView.swift in Sources */,
 				554766C61EC6751200DC47A9 /* ViewController.swift in Sources */,
 				554766C41EC6751200DC47A9 /* AppDelegate.swift in Sources */,
 			);
