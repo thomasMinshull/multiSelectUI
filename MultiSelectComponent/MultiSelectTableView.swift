@@ -18,33 +18,6 @@ protocol MultiSelectDataSource: UITableViewDataSource {
     func multiSelectSelectedViewCellForMutliSelectTableView(_ multiSelectTableView: MultiSelectTableView, indexPath: IndexPath) -> MultiSelectCell
 }
 
-//class MultiSelectCollectionViewDataSource: NSObject, UICollectionViewDataSource {
-//    let multiSelectTableView: MultiSelectTableView!
-//    
-//    init(multiSelectTableView: MultiSelectTableView) {
-//        self.multiSelectTableView = multiSelectTableView
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        guard let selectedRows = multiSelectTableView.tableView.indexPathsForSelectedRows, section == 0 else {
-//            return 0
-//        }
-//        return selectedRows.count
-//    }
-//    
-//    
-//    // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        guard let cell = multiSelectTableView.multiSelectDataSource?.multiSelectCellForMutliSelectTableView(multiSelectTableView) else {
-//            fatalError()
-//        }
-//        
-//        return cell as UICollectionViewCell! // Note this is currently an empty cell // TODO Fix
-//    }
-//}
-
-
-
 class MultiSelectTableView: UIView, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
     @IBOutlet fileprivate var tableView: UITableView! {
@@ -62,6 +35,8 @@ class MultiSelectTableView: UIView, UITableViewDelegate, UICollectionViewDelegat
     }
     
     var multiSelectDataSource: MultiSelectDataSource?
+    
+    // MultiSelect Public API
     
     func dequeueReusableMultiSelectSelectedViewCell(with reuseIdenfifier: String, for indexPath: IndexPath) -> MultiSelectCell {
         let ip = toCollectionViewIndexPath(tableViewIndexPath: indexPath)
@@ -90,7 +65,18 @@ class MultiSelectTableView: UIView, UITableViewDelegate, UICollectionViewDelegat
         return cell as UICollectionViewCell!
     }
     
+    // MARK: UITableViewDelegate Methods 
     
+    public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        // TODO consider implementing self.delegate.MultiSelectComponent(self, willSelectRowAt: indexPath) 
+        // but will need to deal with the case when a different indexPath is returned (This item may not be selected)
+        guard let collectionViewIP = toCollectionViewIndexPath(tableViewIndexPath: indexPath) else {
+            return nil
+        }
+        
+        collectionView.insertItems(at: [collectionViewIP])
+        return indexPath
+    }
     
 
     
@@ -150,10 +136,6 @@ class MultiSelectTableView: UIView, UITableViewDelegate, UICollectionViewDelegat
 //        tableView.register(aClass, forHeaderFooterViewReuseIdentifier: identifier)
 //    }
 
-
-    public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        
-    }
     
     
     
