@@ -17,6 +17,7 @@ protocol MultiSelectDataSource: UITableViewDataSource {
 
 class MultiSelectContoller: UIView, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
+    // Displays MultiSelectItems
     @IBOutlet fileprivate var tableView: UITableView! {
         didSet {
             tableView.delegate = self
@@ -78,12 +79,46 @@ class MultiSelectContoller: UIView, UITableViewDelegate, UICollectionViewDelegat
     }
     
     
+    
+    // MARK: Register MultiSelectSelectedViewCells
+    func registerMultiSelectSelectedViewCell(_ nib: UINib?, forCellReuseIdentifier identifier: String) {
+        collectionView.register(nib, forCellWithReuseIdentifier: identifier)
+    }
+    
+    func register(_ multiSelectSelectedViewCellSubclass: AnyClass?,
+                  forCellWithReuseIdentifier identifier: String) {
+        guard let selectedViewCellSubclass = multiSelectSelectedViewCellSubclass, (selectedViewCellSubclass.isSubclass(of: MultiSelectSelectedViewCell.self)) else {
+            fatalError("Attempt to register MultiSelectSelectedViewCell that is not a sublecall of MultiSelectSelectedViewCell")
+        }
+        
+        collectionView.register(selectedViewCellSubclass, forCellWithReuseIdentifier: identifier)
+    }
+    
     func dequeueReusableMultiSelectSelectedViewCell(with reuseIdenfifier: String, for indexPath: IndexPath) -> MultiSelectSelectedViewCell {
         let ip = toCollectionViewIndexPath(tableViewIndexPath: indexPath)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdenfifier, for: ip!)
         return cell as! MultiSelectSelectedViewCell
     }
     
+    
+    // MARK: Register MultiSelectItemCell
+    func registerMultiSelectItemCellNib(nib: UINib?, forCellReuseIdentifier identifier: String) {
+        tableView.register(nib, forCellReuseIdentifier: identifier)
+    }
+    
+    func registerMultiSelectItemCell(_ cellClass: AnyClass?, forCellReuseIdentifier identifier: String) {
+        tableView.register(cellClass, forCellReuseIdentifier: identifier)
+    }
+    
+    func dequeueReusableMultiSelectItemCell(withIdentifier identifier: String,
+                             for indexPath: IndexPath) -> UITableViewCell {
+        return tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
+    }
+    
+    func dequeueReusableMultiSelectItemCell(withIdentifier identifier: String) -> UITableViewCell? {
+        return tableView.dequeueReusableCell(withIdentifier: identifier)
+    }
+
 
     //MARK: UICollectionViewDataSource Methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
