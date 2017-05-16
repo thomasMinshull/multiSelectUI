@@ -78,6 +78,14 @@ class MultiSelectTableView: UIView, UITableViewDelegate, UICollectionViewDelegat
         return indexPath
     }
     
+    public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        // TODO consider implementing self.delegate.MultiSelectComponent(self, didDeselectRowAt indexPath) 
+        guard let collectionViewIP = toCollectionViewIndexPath(tableViewIndexPath: indexPath) else {
+            return
+        }
+        collectionView.deleteItems(at: [collectionViewIP])
+    }
+    
 
     
 
