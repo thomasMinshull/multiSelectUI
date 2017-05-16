@@ -13,8 +13,9 @@ class MultiSelectCell: UICollectionViewCell {
 }
 
 protocol MultiSelectDataSource: UITableViewDataSource {
-    // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-    func multiSelectCellForMutliSelectTableView(_ multiSelectTableView: MultiSelectTableView, indexPath: IndexPath) -> MultiSelectCell
+    // The cell that is returned must be retrieved from a call
+    // to -dequeueReusableMultiSelectSelectedViewCellWithReuseIdentifier:forIndexPath:
+    func multiSelectSelectedViewCellForMutliSelectTableView(_ multiSelectTableView: MultiSelectTableView, indexPath: IndexPath) -> MultiSelectCell
 }
 
 //class MultiSelectCollectionViewDataSource: NSObject, UICollectionViewDataSource {
@@ -52,6 +53,7 @@ class MultiSelectTableView: UIView, UITableViewDelegate, UICollectionViewDelegat
         }
     }
     
+    // MultiSelectSelectedView
     @IBOutlet fileprivate var collectionView: UICollectionView! {
         didSet {
             collectionView.delegate = self
@@ -61,7 +63,13 @@ class MultiSelectTableView: UIView, UITableViewDelegate, UICollectionViewDelegat
     
     var multiSelectDataSource: MultiSelectDataSource?
     
-    //MARK: UICollectionViewDataSource Methods 
+    func dequeueReusableMultiSelectSelectedViewCell(with reuseIdenfifier: String, for indexPath: IndexPath) -> MultiSelectCell {
+        let ip = toCollectionViewIndexPath(tableViewIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdenfifier, for: ip!)
+        return cell as! MultiSelectCell
+    }
+    
+    //MARK: UICollectionViewDataSource Methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let selected = sortedSelectedIndexPaths(), section == 0 else {
             return 0
@@ -69,17 +77,19 @@ class MultiSelectTableView: UIView, UITableViewDelegate, UICollectionViewDelegat
         return selected.count
     }
     
-    // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath: //TODO implement this
+    // The cell that is returned must be retrieved from a call to -dequeueReusableWithReuseIdentifier:forIndexPath: 
+    // must be passed in a indexPath for the collectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let selectedIP = sortedSelectedIndexPaths(), indexPath.section == 0 else {
-            fatalError()
+            fatalError() // consider trying to see if this is a tableViewIndexPath and if so returning the correct cell
         }
         let tableViewip = selectedIP[indexPath.row]
         let multiSelectDataSource = self.multiSelectDataSource!
-        let cell = multiSelectDataSource.multiSelectCellForMutliSelectTableView(self, indexPath: tableViewip)
+        let cell = multiSelectDataSource.multiSelectSelectedViewCellForMutliSelectTableView(self, indexPath: tableViewip)
         
         return cell as UICollectionViewCell!
     }
+    
     
     
 
