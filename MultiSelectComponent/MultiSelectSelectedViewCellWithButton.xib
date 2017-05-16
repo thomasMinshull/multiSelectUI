@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MultiSelectSelectedViewCellWithButton"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MultiSelectCollectionViewCell" id="OTM-mc-PtZ" customClass="MultiSelectCollectionViewCell" customModule="MultiSelectComponent" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="200" height="100"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Opu-wT-mf3">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="100"/>
+                        <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="GUK-sF-YjM"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="bGg-pc-CkE"/>
+                        </constraints>
+                        <state key="normal" title="X"/>
+                        <connections>
+                            <action selector="deSelectButtonTapped:forEvent:" destination="OTM-mc-PtZ" eventType="touchUpInside" id="khW-Fv-Ugy"/>
+                        </connections>
+                    </button>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="LCe-dk-AqN">
+                        <rect key="frame" x="58" y="8" width="134" height="84"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wcO-Fr-hcS">
+                                <rect key="frame" x="0.0" y="0.0" width="134" height="42"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EtP-VI-Bw6">
+                                <rect key="frame" x="0.0" y="42" width="134" height="42"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="EtP-VI-Bw6" secondAttribute="trailing" id="6Cz-XI-W1p"/>
+                            <constraint firstItem="EtP-VI-Bw6" firstAttribute="leading" secondItem="LCe-dk-AqN" secondAttribute="leading" id="FCA-OW-3Ml"/>
+                            <constraint firstItem="wcO-Fr-hcS" firstAttribute="leading" secondItem="LCe-dk-AqN" secondAttribute="leading" id="Twh-nZ-FMB"/>
+                            <constraint firstAttribute="trailing" secondItem="wcO-Fr-hcS" secondAttribute="trailing" id="YEm-gh-QSm"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+            </view>
+            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="LCe-dk-AqN" firstAttribute="top" secondItem="OTM-mc-PtZ" secondAttribute="topMargin" id="1Qy-BR-Dy3"/>
+                <constraint firstItem="Opu-wT-mf3" firstAttribute="top" secondItem="OTM-mc-PtZ" secondAttribute="top" id="Fot-K1-dKl"/>
+                <constraint firstItem="LCe-dk-AqN" firstAttribute="leading" secondItem="Opu-wT-mf3" secondAttribute="trailing" constant="8" id="NEl-Gq-SZD"/>
+                <constraint firstAttribute="trailingMargin" secondItem="LCe-dk-AqN" secondAttribute="trailing" id="SEc-v6-sfN"/>
+                <constraint firstAttribute="bottom" secondItem="Opu-wT-mf3" secondAttribute="bottom" id="dCc-Bw-6cK"/>
+                <constraint firstItem="Opu-wT-mf3" firstAttribute="width" secondItem="OTM-mc-PtZ" secondAttribute="width" multiplier="1:4" id="gyn-CS-i7q"/>
+                <constraint firstItem="LCe-dk-AqN" firstAttribute="top" secondItem="OTM-mc-PtZ" secondAttribute="topMargin" id="l2a-aG-goH"/>
+                <constraint firstAttribute="bottomMargin" secondItem="LCe-dk-AqN" secondAttribute="bottom" id="m78-Wb-wpr"/>
+                <constraint firstItem="Opu-wT-mf3" firstAttribute="leading" secondItem="OTM-mc-PtZ" secondAttribute="leading" id="slW-Wk-Mbm"/>
+            </constraints>
+            <connections>
+                <outlet property="deSelectButton" destination="Opu-wT-mf3" id="abV-Qy-anS"/>
+                <outlet property="detailTextLabel" destination="EtP-VI-Bw6" id="cL2-lz-r7g"/>
+                <outlet property="detailTextLabelOutlet" destination="EtP-VI-Bw6" id="c7Y-r3-oKI"/>
+                <outlet property="textLabel" destination="wcO-Fr-hcS" id="7eD-dl-4pp"/>
+                <outlet property="textLabelOutlet" destination="wcO-Fr-hcS" id="QCl-ZZ-u6B"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+</document>
