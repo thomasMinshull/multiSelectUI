@@ -33,120 +33,23 @@ class MultiSelectContoller: UIView, UITableViewDelegate, UICollectionViewDelegat
     
     var multiSelectDataSource: MultiSelectDataSource?
     
-    // MultiSelect Public API
-    
-    func dequeueReusableMultiSelectSelectedViewCell(with reuseIdenfifier: String, for indexPath: IndexPath) -> MultiSelectSelectedViewCell {
-        let ip = toCollectionViewIndexPath(tableViewIndexPath: indexPath)
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdenfifier, for: ip!)
-        return cell as! MultiSelectSelectedViewCell
-    }
-    
-    //MARK: UICollectionViewDataSource Methods
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let selected = sortedSelectedIndexPaths(), section == 0 else {
-            return 0
+    var style: UITableViewStyle {
+        get {
+            return tableView.style
         }
-        return selected.count
     }
     
-    // The cell that is returned must be retrieved from a call to -dequeueReusableWithReuseIdentifier:forIndexPath: 
-    // must be passed in a indexPath for the collectionView
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let selectedIP = sortedSelectedIndexPaths(), indexPath.section == 0 else {
-            fatalError() // consider trying to see if this is a tableViewIndexPath and if so returning the correct cell
-        }
-        let tableViewip = selectedIP[indexPath.row]
-        let multiSelectDataSource = self.multiSelectDataSource!
-        let cell = multiSelectDataSource.multiSelectSelectedViewCellForMutliSelectTableView(self, indexPath: tableViewip)
-        
-        return cell as UICollectionViewCell!
-    }
-    
-    // MARK: UITableViewDelegate Methods 
-    
-    public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        // TODO consider implementing self.delegate.MultiSelectComponent(self, willSelectRowAt: indexPath) 
-        // but will need to deal with the case when a different indexPath is returned (This item may not be selected)
-        guard let collectionViewIP = toCollectionViewIndexPath(tableViewIndexPath: indexPath) else {
-            return nil
+    weak var dataSource: UITableViewDataSource? {
+        get {
+            return tableView.dataSource
         }
         
-        collectionView.insertItems(at: [collectionViewIP])
-        return indexPath
+        set {
+            tableView.dataSource = newValue
+        }
     }
     
-    public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        // TODO consider implementing self.delegate.MultiSelectComponent(self, didDeselectRowAt indexPath) 
-        guard let collectionViewIP = toCollectionViewIndexPath(tableViewIndexPath: indexPath) else {
-            return
-        }
-        collectionView.deleteItems(at: [collectionViewIP])
-    }
-    
-
-    
-
-    // MARK: Helper method
-    
-    private func sortedSelectedIndexPaths() -> [IndexPath]? {
-        guard let selectedIndexPaths = tableView.indexPathsForSelectedRows else {
-            return nil
-        }
-        return selectedIndexPaths.sorted(by: { (first, second) -> Bool in
-            if first.section < second.section {
-                return true
-            } else {
-                return first.section == second.section && first.row < second.row
-            }
-        })
-    }
-    
-    private func toCollectionViewIndexPath(tableViewIndexPath: IndexPath) -> IndexPath? {
-        guard let selectedIP = sortedSelectedIndexPaths() else {
-            return nil
-        }
-        let preceedingSelectedIndexPaths = selectedIP.filter { (ip) -> Bool in
-            return ip.row < tableViewIndexPath.row && ip.section <= tableViewIndexPath.section
-        }
-        let collectionViewRow = preceedingSelectedIndexPaths.count
-        let collectionViewSection = 0
-        return IndexPath(row: collectionViewRow, section: collectionViewSection)
-    }
-
-    
-    
-    
-    
-//    // MARK: Register Cells
-//    func register(multiSelectCell:AnyClass?, forCellWithReuseIdentifier: String) {
-//        guard let multiSelectCell = multiSelectCell, (multiSelectCell.isSubclass(of: MultiSelectCell.self)) else {
-//            fatalError("Attempt to register multiSelectCell that is not a sublecall of MultiSelectCell")
-//        }
-//        collectionView.register(multiSelectCell, forCellWithReuseIdentifier: forCellWithReuseIdentifier)
-//    }
-    
-//    func registerTableViewCell(_ nib: UINib?, forCellReuseIdentifier identifier: String) {
-//        tableView.register(nib, forCellReuseIdentifier: identifier)
-//    }
-//
-//    func registerTableViewCell(cellClass: Swift.AnyClass?, forCellReuseIdentifier identifier: String) {
-//        tableView.register(cellClass, forCellReuseIdentifier: identifier)
-//    }
-//    
-//    func registerTableViewCell(_ nib: UINib?, forHeaderFooterViewReuseIdentifier identifier: String) {
-//        tableView.register(nib, forHeaderFooterViewReuseIdentifier: identifier)
-//    }
-//    
-//    func registerTableViewCell(aClass: Swift.AnyClass?, forHeaderFooterViewReuseIdentifier identifier: String) {
-//        tableView.register(aClass, forHeaderFooterViewReuseIdentifier: identifier)
-//    }
-
-    
-    
-    
-    
-    
-    // MARK: implements tableView API, most cases simple passes message call to tableView
+    // multiSelectDataSource init
     init(frame: CGRect, style: UITableViewStyle) {
         let collectionViewX: CGFloat = 0
         let collectionViewY: CGFloat = 0
@@ -182,22 +85,82 @@ class MultiSelectContoller: UIView, UITableViewDelegate, UICollectionViewDelegat
         super.init(coder: aDecoder)
     }
     
-    var style: UITableViewStyle {
-        get {
-            return tableView.style
-        }
+    
+    func dequeueReusableMultiSelectSelectedViewCell(with reuseIdenfifier: String, for indexPath: IndexPath) -> MultiSelectSelectedViewCell {
+        let ip = toCollectionViewIndexPath(tableViewIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdenfifier, for: ip!)
+        return cell as! MultiSelectSelectedViewCell
     }
     
-    weak var dataSource: UITableViewDataSource? {
-        get {
-            return tableView.dataSource
+    
+    //MARK: UICollectionViewDataSource Methods
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let selected = sortedSelectedIndexPaths(), section == 0 else {
+            return 0
+        }
+        return selected.count
+    }
+    
+    // The cell that is returned must be retrieved from a call to -dequeueReusableWithReuseIdentifier:forIndexPath:
+    // must be passed in a indexPath for the collectionView
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let selectedIP = sortedSelectedIndexPaths(), indexPath.section == 0 else {
+            fatalError() // consider trying to see if this is a tableViewIndexPath and if so returning the correct cell
+        }
+        let tableViewip = selectedIP[indexPath.row]
+        let multiSelectDataSource = self.multiSelectDataSource!
+        let cell = multiSelectDataSource.multiSelectSelectedViewCellForMutliSelectTableView(self, indexPath: tableViewip)
+        
+        return cell as UICollectionViewCell!
+    }
+    
+    
+    // MARK: UITableViewDelegate Methods
+    
+    public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        // TODO consider implementing self.delegate.MultiSelectComponent(self, willSelectRowAt: indexPath)
+        // but will need to deal with the case when a different indexPath is returned (This item may not be selected)
+        guard let collectionViewIP = toCollectionViewIndexPath(tableViewIndexPath: indexPath) else {
+            return nil
         }
         
-        set {
-            tableView.dataSource = newValue
-        }
+        collectionView.insertItems(at: [collectionViewIP])
+        return indexPath
     }
     
+    public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        // TODO consider implementing self.delegate.MultiSelectComponent(self, didDeselectRowAt indexPath)
+        guard let collectionViewIP = toCollectionViewIndexPath(tableViewIndexPath: indexPath) else {
+            return
+        }
+        collectionView.deleteItems(at: [collectionViewIP])
+    }
     
+
+    // MARK: Helper method
     
+    private func sortedSelectedIndexPaths() -> [IndexPath]? {
+        guard let selectedIndexPaths = tableView.indexPathsForSelectedRows else {
+            return nil
+        }
+        return selectedIndexPaths.sorted(by: { (first, second) -> Bool in
+            if first.section < second.section {
+                return true
+            } else {
+                return first.section == second.section && first.row < second.row
+            }
+        })
+    }
+    
+    private func toCollectionViewIndexPath(tableViewIndexPath: IndexPath) -> IndexPath? {
+        guard let selectedIP = sortedSelectedIndexPaths() else {
+            return nil
+        }
+        let preceedingSelectedIndexPaths = selectedIP.filter { (ip) -> Bool in
+            return ip.row < tableViewIndexPath.row && ip.section <= tableViewIndexPath.section
+        }
+        let collectionViewRow = preceedingSelectedIndexPaths.count
+        let collectionViewSection = 0
+        return IndexPath(row: collectionViewRow, section: collectionViewSection)
+    }
 }
