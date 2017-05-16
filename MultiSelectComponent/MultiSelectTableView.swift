@@ -13,37 +13,37 @@ class MultiSelectCell: UICollectionViewCell {
 }
 
 protocol MultiSelectDataSource: UITableViewDataSource {
-    func multiSelectCellForMutliSelectTableView(_ multiSelectTableView: MultiSelectTableView) -> MultiSelectCell
+    func multiSelectCellForMutliSelectTableView(_ multiSelectTableView: MultiSelectTableView, indexPath: IndexPath) -> MultiSelectCell
 }
 
-class MultiSelectCollectionViewDataSource: NSObject, UICollectionViewDataSource {
-    let multiSelectTableView: MultiSelectTableView!
-    
-    init(multiSelectTableView: MultiSelectTableView) {
-        self.multiSelectTableView = multiSelectTableView
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let selectedRows = multiSelectTableView.tableView.indexPathsForSelectedRows, section == 0 else {
-            return 0
-        }
-        return selectedRows.count
-    }
-    
-    
-    // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = multiSelectTableView.multiSelectDataSource?.multiSelectCellForMutliSelectTableView(multiSelectTableView) else {
-            fatalError()
-        }
-        
-        return cell as UICollectionViewCell! // Note this is currently an empty cell // TODO Fix
-    }
-}
+//class MultiSelectCollectionViewDataSource: NSObject, UICollectionViewDataSource {
+//    let multiSelectTableView: MultiSelectTableView!
+//    
+//    init(multiSelectTableView: MultiSelectTableView) {
+//        self.multiSelectTableView = multiSelectTableView
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        guard let selectedRows = multiSelectTableView.tableView.indexPathsForSelectedRows, section == 0 else {
+//            return 0
+//        }
+//        return selectedRows.count
+//    }
+//    
+//    
+//    // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        guard let cell = multiSelectTableView.multiSelectDataSource?.multiSelectCellForMutliSelectTableView(multiSelectTableView) else {
+//            fatalError()
+//        }
+//        
+//        return cell as UICollectionViewCell! // Note this is currently an empty cell // TODO Fix
+//    }
+//}
 
 
 
-class MultiSelectTableView: UIView, UITableViewDelegate, UICollectionViewDelegate {
+class MultiSelectTableView: UIView, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
     @IBOutlet fileprivate var tableView: UITableView! {
         didSet {
@@ -54,70 +54,101 @@ class MultiSelectTableView: UIView, UITableViewDelegate, UICollectionViewDelegat
     @IBOutlet fileprivate var collectionView: UICollectionView! {
         didSet {
             collectionView.delegate = self
+            collectionView.dataSource = self
         }
     }
-    
-    private var multiSelectCollectionViewDataSource: MultiSelectCollectionViewDataSource!
     
     var multiSelectDataSource: MultiSelectDataSource?
     
-    
-    // MARK: Register Cells
-    func register(multiSelectCell:AnyClass?, forCellWithReuseIdentifier: String) {
-        guard let multiSelectCell = multiSelectCell, (multiSelectCell.isSubclass(of: MultiSelectCell.self)) else {
-            fatalError("Attempt to register multiSelectCell that is not a sublecall of MultiSelectCell")
+    //MARK: UICollectionViewDataSource Methods 
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let selected = sortedSelectedIndexPaths(), section == 0 else {
+            return 0
         }
-        collectionView.register(multiSelectCell, forCellWithReuseIdentifier: forCellWithReuseIdentifier)
+        return selected.count
     }
     
-    func registerTableViewCell(_ nib: UINib?, forCellReuseIdentifier identifier: String) {
-        tableView.register(nib, forCellReuseIdentifier: identifier)
+    // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        guard let selected = sortedSelectedIndexPaths(), selected.count > 0 else {
+//            return
+//        }
+        let selectedIP = sortedSelectedIndexPaths()
+        let ip = selectedIP[IndexPath.row]
+        
+        
+        
+//        guard let cell = multiSelectDataSource?.multiSelectCellForMutliSelectTableView(multiSelectTableView) else {
+//            fatalError()
+//        }
+        
+        return cell as UICollectionViewCell! // Note this is currently an empty cell // TODO Fix
     }
 
-    func registerTableViewCell(cellClass: Swift.AnyClass?, forCellReuseIdentifier identifier: String) {
-        tableView.register(cellClass, forCellReuseIdentifier: identifier)
+    
+
+    // MARK: Helper method
+    
+    private func sortedSelectedIndexPaths() -> [IndexPath]? {
+        guard let selectedIndexPaths = tableView.indexPathsForSelectedRows else {
+            return nil
+        }
+        return selectedIndexPaths.sorted(by: { (first, second) -> Bool in
+            if first.section < second.section {
+                return true
+            } else {
+                return first.section == second.section && first.row < second.row
+            }
+        })
     }
     
-    func registerTableViewCell(_ nib: UINib?, forHeaderFooterViewReuseIdentifier identifier: String) {
-        tableView.register(nib, forHeaderFooterViewReuseIdentifier: identifier)
-    }
-    
-    func registerTableViewCell(aClass: Swift.AnyClass?, forHeaderFooterViewReuseIdentifier identifier: String) {
-        tableView.register(aClass, forHeaderFooterViewReuseIdentifier: identifier)
+    private func toCollectionViewIndexPath(tableViewIndexPath: IndexPath) -> IndexPath? {
+        guard let selectedIP = sortedSelectedIndexPaths() else {
+            return nil
+        }
+        let preceedingSelectedIndexPaths = selectedIP.filter { (ip) -> Bool in
+            return ip.row < tableViewIndexPath.row && ip.section <= tableViewIndexPath.section
+        }
+        let collectionViewRow = preceedingSelectedIndexPaths.count
+        let collectionViewSection = 0
+        return IndexPath(row: collectionViewRow, section: collectionViewSection)
     }
 
-    // MARK: Select cells 
     
-    // Selects and deselects rows. These methods will not call the delegate methods (-tableView:willSelectRowAtIndexPath: or tableView:didSelectRowAtIndexPath:), nor will it send out a notification.
-    open func selectRow(at indexPath: IndexPath?, animated: Bool, scrollPosition: UITableViewScrollPosition) { // maybe you can't do this
-        tableView.selectRow(at: indexPath, animated: animated, scrollPosition: scrollPosition)
-        // TODO need to insert row / add row to collectionView
-    }
     
-    open func deselectRow(at indexPath: IndexPath, animated: Bool) { // maybe you can't do this
-        tableView.deselectRow(at: indexPath, animated: animated)
-        // TODO need to remove item from CollectionView
-    }
     
+    
+//    // MARK: Register Cells
+//    func register(multiSelectCell:AnyClass?, forCellWithReuseIdentifier: String) {
+//        guard let multiSelectCell = multiSelectCell, (multiSelectCell.isSubclass(of: MultiSelectCell.self)) else {
+//            fatalError("Attempt to register multiSelectCell that is not a sublecall of MultiSelectCell")
+//        }
+//        collectionView.register(multiSelectCell, forCellWithReuseIdentifier: forCellWithReuseIdentifier)
+//    }
+    
+//    func registerTableViewCell(_ nib: UINib?, forCellReuseIdentifier identifier: String) {
+//        tableView.register(nib, forCellReuseIdentifier: identifier)
+//    }
+//
+//    func registerTableViewCell(cellClass: Swift.AnyClass?, forCellReuseIdentifier identifier: String) {
+//        tableView.register(cellClass, forCellReuseIdentifier: identifier)
+//    }
+//    
+//    func registerTableViewCell(_ nib: UINib?, forHeaderFooterViewReuseIdentifier identifier: String) {
+//        tableView.register(nib, forHeaderFooterViewReuseIdentifier: identifier)
+//    }
+//    
+//    func registerTableViewCell(aClass: Swift.AnyClass?, forHeaderFooterViewReuseIdentifier identifier: String) {
+//        tableView.register(aClass, forHeaderFooterViewReuseIdentifier: identifier)
+//    }
+
+
     public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         
     }
     
     
     
-    
-    // returns nil or index path representing section and row of selection.
-    var indexPathForSelectedRow: IndexPath? {
-        get {
-            return tableView.indexPathForSelectedRow
-        }
-    }
-    
-    var indexPathsForSelectedRows: [IndexPath]? {
-        get {
-            return tableView.indexPathsForSelectedRows
-        }
-    }
     
     
     // MARK: implements tableView API, most cases simple passes message call to tableView
@@ -150,12 +181,10 @@ class MultiSelectTableView: UIView, UITableViewDelegate, UICollectionViewDelegat
         self.addSubview(tableView)
         self.addSubview(collectionView)
         
-        collectionView.dataSource = MultiSelectCollectionViewDataSource(multiSelectTableView: self)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        collectionView.dataSource = MultiSelectCollectionViewDataSource(multiSelectTableView: self)
     }
     
     var style: UITableViewStyle {
@@ -174,36 +203,6 @@ class MultiSelectTableView: UIView, UITableViewDelegate, UICollectionViewDelegat
         }
     }
     
-    weak var delegate: UITableViewDelegate? {
-        get {
-            return tableView.delegate
-        }
-        
-        set {
-            tableView.delegate = newValue
-        }
-    }
-    
-    weak var prefetchDataSource: UITableViewDataSourcePrefetching? {
-        get {
-            return tableView.prefetchDataSource
-        }
-        
-        set {
-            tableView.prefetchDataSource = newValue
-        }
-    }
-    
-    // will return the default value if unset
-    open var rowHeight: CGFloat {
-        get {
-            return tableView.rowHeight
-        }
-        
-        set {
-            tableView.rowHeight = newValue
-        }
-    }
     
     
 }
