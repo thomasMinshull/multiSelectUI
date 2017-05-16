@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MultiSelectTableView" customModule="MultiSelectComponent" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MultiSelectContoller" customModule="MultiSelectComponent" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -44,8 +44,8 @@
                 <constraint firstAttribute="trailing" secondItem="NgJ-Xu-JeL" secondAttribute="trailing" id="t3O-DT-Mvj"/>
             </constraints>
             <connections>
-                <outlet property="collectionView" destination="rj7-ER-1LV" id="Qj8-7I-gmd"/>
-                <outlet property="tableView" destination="NgJ-Xu-JeL" id="Qbn-XI-jgv"/>
+                <outlet property="collectionView" destination="rj7-ER-1LV" id="ibm-Ry-ter"/>
+                <outlet property="tableView" destination="NgJ-Xu-JeL" id="VFb-DV-Wqt"/>
             </connections>
             <point key="canvasLocation" x="34.5" y="53.5"/>
         </view>

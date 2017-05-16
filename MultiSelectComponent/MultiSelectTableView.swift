@@ -15,10 +15,10 @@ class MultiSelectCell: UICollectionViewCell {
 protocol MultiSelectDataSource: UITableViewDataSource {
     // The cell that is returned must be retrieved from a call
     // to -dequeueReusableMultiSelectSelectedViewCellWithReuseIdentifier:forIndexPath:
-    func multiSelectSelectedViewCellForMutliSelectTableView(_ multiSelectTableView: MultiSelectTableView, indexPath: IndexPath) -> MultiSelectCell
+    func multiSelectSelectedViewCellForMutliSelectTableView(_ multiSelectTableView: MultiSelectContoller, indexPath: IndexPath) -> MultiSelectCell
 }
 
-class MultiSelectTableView: UIView, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+class MultiSelectContoller: UIView, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
     @IBOutlet fileprivate var tableView: UITableView! {
         didSet {
