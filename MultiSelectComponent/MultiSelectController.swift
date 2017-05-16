@@ -31,21 +31,13 @@ class MultiSelectContoller: UIView, UITableViewDelegate, UICollectionViewDelegat
         }
     }
     
-    var multiSelectDataSource: MultiSelectDataSource?
-    
-    var style: UITableViewStyle {
-        get {
-            return tableView.style
-        }
-    }
-    
-    weak var dataSource: UITableViewDataSource? {
-        get {
-            return tableView.dataSource
-        }
-        
-        set {
-            tableView.dataSource = newValue
+    var multiSelectDataSource: MultiSelectDataSource? {
+        didSet {
+            guard let multiSelectDataSource = multiSelectDataSource else {
+                tableView.dataSource = nil
+                return
+            }
+            tableView.dataSource = multiSelectDataSource as UITableViewDataSource
         }
     }
     
@@ -92,7 +84,7 @@ class MultiSelectContoller: UIView, UITableViewDelegate, UICollectionViewDelegat
         return cell as! MultiSelectSelectedViewCell
     }
     
-    
+
     //MARK: UICollectionViewDataSource Methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let selected = sortedSelectedIndexPaths(), section == 0 else {
