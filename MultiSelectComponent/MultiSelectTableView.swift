@@ -13,6 +13,7 @@ class MultiSelectCell: UICollectionViewCell {
 }
 
 protocol MultiSelectDataSource: UITableViewDataSource {
+    // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
     func multiSelectCellForMutliSelectTableView(_ multiSelectTableView: MultiSelectTableView, indexPath: IndexPath) -> MultiSelectCell
 }
 
@@ -68,22 +69,19 @@ class MultiSelectTableView: UIView, UITableViewDelegate, UICollectionViewDelegat
         return selected.count
     }
     
-    // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+    // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath: //TODO implement this
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        guard let selected = sortedSelectedIndexPaths(), selected.count > 0 else {
-//            return
-//        }
-        let selectedIP = sortedSelectedIndexPaths()
-        let ip = selectedIP[IndexPath.row]
+        guard let selectedIP = sortedSelectedIndexPaths(), indexPath.section == 0 else {
+            fatalError()
+        }
+        let tableViewip = selectedIP[indexPath.row]
+        let multiSelectDataSource = self.multiSelectDataSource!
+        let cell = multiSelectDataSource.multiSelectCellForMutliSelectTableView(self, indexPath: tableViewip)
         
-        
-        
-//        guard let cell = multiSelectDataSource?.multiSelectCellForMutliSelectTableView(multiSelectTableView) else {
-//            fatalError()
-//        }
-        
-        return cell as UICollectionViewCell! // Note this is currently an empty cell // TODO Fix
+        return cell as UICollectionViewCell!
     }
+    
+    
 
     
 
