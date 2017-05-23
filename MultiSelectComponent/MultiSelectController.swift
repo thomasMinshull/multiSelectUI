@@ -42,6 +42,20 @@ class MultiSelectContoller: UIView, UITableViewDelegate, UICollectionViewDelegat
         }
     }
     
+    var selectedIndexPaths:[IndexPath]? {
+        get {
+            return sortedSelectedIndexPaths()
+        }
+    
+        set {
+            //TODO implement
+           // tableView.selectedIndexPaths = newValue // is there a select method that takes an array of IP? 
+           // collectionView.reloadData()
+        }
+    }
+    
+    // TODO setup process do we need to implement reloadData { tableView.reload, collectionView.reload }
+    
     // multiSelectDataSource init
     init(frame: CGRect, style: UITableViewStyle) {
         let collectionViewX: CGFloat = 0
