@@ -19,15 +19,20 @@ protocol MultiSelectDelegate { // nested VC must implement these methods
     func multiSelectSelectedViewCell(For indexPath: IndexPath) -> MultiSelectSelectedViewCell
 }
 
-class MultiSelectContoller: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
+class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     // MultiSelectSelectedView
-    @IBOutlet fileprivate var collectionView: UICollectionView! {
+    @IBOutlet private var collectionView: UICollectionView! {
         didSet {
             collectionView.delegate = self
             collectionView.dataSource = self
         }
     }
+    
+    @IBOutlet private var containerView: UIView!
+    
+    
+    var childViewController: UIViewController!
     
     var multiSelectDelegate: MultiSelectDelegate?
     private var count = 0
@@ -65,6 +70,24 @@ class MultiSelectContoller: UIView, UICollectionViewDelegate, UICollectionViewDa
             count = count - 1
         }
 
+    }
+    
+    // MARK: Methods for nesting ChildViewController
+    
+    func nestInMultiSelectViewController(childViewController:UIViewController) {
+        guard let childView = childViewController.view else {
+            return
+        }
+
+        addChildViewController(childViewController)
+        
+        containerView.addSubview(childView)
+        childView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
+        childView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+        childView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+        childView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
+        
+        childViewController.didMove(toParentViewController: self)
     }
     
     // MARK: Register MultiSelectSelectedViewCells
