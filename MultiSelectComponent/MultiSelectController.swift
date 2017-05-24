@@ -12,10 +12,11 @@ import UIKit
 protocol MultiSelectDelegate { // nested VC must implement these methods
     
     func selectedIndexPaths() -> [IndexPath]
-    func multiSelectSelectedViewRemovedItem(at indexPath:IndexPath) // IndexPath here is in terms of the childs index path
     
-    // The cell that is returned must be retrieved from a call
-    // to -dequeueReusableMultiSelectSelectedViewCellWithReuseIdentifier:forIndexPath:
+    /// Is called when the multiSelectSelectedViewCell is removed from the multiSelectSelectedView is passed in a childVCIndexPath
+    func multiSelectSelectedViewRemovedItem(at indexPath:IndexPath)
+    
+    /// The cell that is returned must be retrieved from a call to -dequeueReusableMultiSelectSelectedViewCellWithReuseIdentifier:forIndexPath:
     func multiSelectSelectedViewCell(For indexPath: IndexPath) -> MultiSelectSelectedViewCell
 }
 
@@ -31,49 +32,44 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
     
     @IBOutlet private var containerView: UIView!
     
-    
-    var childViewController: UIViewController!
-    
     var multiSelectDelegate: MultiSelectDelegate?
     private var count = 0
     
+    /// Call this item to add an item to the MultiSelectSelectedView prior to selecting the item in the childVC
     func addItemToBeSelected(For indexPath: IndexPath) {
-        // 1- get sortedSelectedList
-        // 2- check that index path isn't in list
         guard let selectedIPs = sortedSelectedIndexPaths(),
             !selectedIPs.contains(indexPath) else {
             return
         }
         
-        // 3- insert cell at correct collectionViewIndexPath
         if let collectionViewIP = toCollectionViewIndexPath(childVCIndexPath: indexPath) {
             collectionView.insertItems(at: [collectionViewIP])
-            
-            // 4 increment count
             count = count + 1
         }
     }
     
+    /// Call this item to remove an item from the MultiSelectSelectedView prior to deselecting the item from the childVC
     func removeItemToBeDeselected(For indexPath: IndexPath) {
-        // 1- get sortedSelectedList
-        // 2- check that index path is in list
         guard let selectedIPs = sortedSelectedIndexPaths(),
             selectedIPs.contains(indexPath) else {
                 return
         }
         
-        // 3- remove cell at correct collectionViewIndexPath
         if let collectionViewIP = toCollectionViewIndexPath(childVCIndexPath: indexPath) {
             collectionView.deleteItems(at: [collectionViewIP])
-            
-            // 4 decrement count
+
             count = count - 1
         }
 
     }
     
-    // MARK: Methods for nesting ChildViewController
+    func dequeueReusableMultiSelectSelectedViewCell(with reuseIdenfifier: String, for indexPath: IndexPath) -> MultiSelectSelectedViewCell {
+        let ip = toCollectionViewIndexPath(childVCIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdenfifier, for: ip!)
+        return cell as! MultiSelectSelectedViewCell
+    }
     
+    // MARK: Methods for nesting ChildViewController
     func nestInMultiSelectViewController(childViewController:UIViewController) {
         guard let childView = childViewController.view else {
             return
@@ -90,6 +86,7 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
         childViewController.didMove(toParentViewController: self)
     }
     
+    
     // MARK: Register MultiSelectSelectedViewCells
     func registerMultiSelectSelectedViewCell(_ nib: UINib?, forCellReuseIdentifier identifier: String) {
         collectionView.register(nib, forCellWithReuseIdentifier: identifier)
@@ -104,27 +101,20 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
         collectionView.register(selectedViewCellSubclass, forCellWithReuseIdentifier: identifier)
     }
     
-    func dequeueReusableMultiSelectSelectedViewCell(with reuseIdenfifier: String, for indexPath: IndexPath) -> MultiSelectSelectedViewCell {
-        let ip = toCollectionViewIndexPath(childVCIndexPath: indexPath)
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdenfifier, for: ip!)
-        return cell as! MultiSelectSelectedViewCell
-    }
     
     // MARK: UICollectionViewDataSource Methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return count
     }
     
-    // The cell that is returned must be retrieved from a call to -dequeueReusableWithReuseIdentifier:forIndexPath:
-    // must be passed in a indexPath for the collectionView
+    /// The cell that is returned must be retrieved from a call to -dequeueReusableWithReuseIdentifier:forIndexPath:
+    /// only the collectionView should call this method. IndexPath must be a MultiSelectSelectedView indexPath
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let childVCIndexPath = toChildVCIndexPath(collectionViewIndexPath: indexPath),
-        let multiSelectDelegate = self.multiSelectDelegate else {
-                fatalError() // consider trying to see if this is a tableViewIndexPath and if so returning the correct cell
+        guard let childVCIndexPath = toChildVCIndexPath(collectionViewIndexPath: indexPath) else {
+            fatalError("IndexPath for MultiSelectController could not be converted into a childViewController IndexPath")
         }
-
-        let cell = multiSelectDelegate.multiSelectSelectedViewCell(For: childVCIndexPath)
-        return cell as UICollectionViewCell!
+        
+        return multiSelectDelegate?.multiSelectSelectedViewCell(For: childVCIndexPath) as UICollectionViewCell!
     }
 
     // MARK: Helper method
@@ -149,9 +139,11 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
         guard let selectedIP = sortedSelectedIndexPaths() else {
             return nil
         }
+        
         let preceedingSelectedIndexPaths = selectedIP.filter { (ip) -> Bool in
             return ip.row < childVCIndexPath.row && ip.section <= childVCIndexPath.section
         }
+        
         let collectionViewRow = preceedingSelectedIndexPaths.count
         let collectionViewSection = 0
         return IndexPath(row: collectionViewRow, section: collectionViewSection)
