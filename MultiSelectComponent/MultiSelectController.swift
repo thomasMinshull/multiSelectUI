@@ -41,36 +41,38 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
         nestInMultiSelectViewController(childViewController: nestedViewController)
     }
     
-    /// Call this item to add an item to the MultiSelectSelectedView prior to selecting the item in the childVC
+    /// Call this item to add an item to the MultiSelectSelectedView after selecting the item in the childVC
     func addItemToBeSelected(For indexPath: IndexPath) {
         guard let selectedIPs = sortedSelectedIndexPaths(),
-            !selectedIPs.contains(indexPath) else {
+            selectedIPs.contains(indexPath) else {
             return
         }
         
         if let collectionViewIP = toCollectionViewIndexPath(childVCIndexPath: indexPath) {
-            collectionView.insertItems(at: [collectionViewIP])
             count = count + 1
+            collectionView.insertItems(at: [collectionViewIP])
         }
     }
     
-    /// Call this item to remove an item from the MultiSelectSelectedView prior to deselecting the item from the childVC
+    /// Call this item to remove an item from the MultiSelectSelectedView after deselecting the item from the childVC
     func removeItemToBeDeselected(For indexPath: IndexPath) {
         guard let selectedIPs = sortedSelectedIndexPaths(),
-            selectedIPs.contains(indexPath) else {
+            !selectedIPs.contains(indexPath) else {
                 return
         }
         
+        // note toCollectionViewIndexPath should return the index path that this childVCIndexPath priviously ocupied, 
+        // as long as no other rows from an earlier row/section have been removed since the CollectionView was last updated
         if let collectionViewIP = toCollectionViewIndexPath(childVCIndexPath: indexPath) {
-            collectionView.deleteItems(at: [collectionViewIP])
-
             count = count - 1
+            collectionView.deleteItems(at: [collectionViewIP])
         }
     }
     
     func dequeueReusableMultiSelectSelectedViewCell(with reuseIdenfifier: String, for indexPath: IndexPath) -> MultiSelectSelectedViewCell {
         let ip = toCollectionViewIndexPath(childVCIndexPath: indexPath)
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdenfifier, for: ip!)
+        let collectionViewUnwrapped = collectionView!
+        let cell = collectionViewUnwrapped.dequeueReusableCell(withReuseIdentifier: reuseIdenfifier, for: ip!)
         return cell as! MultiSelectSelectedViewCell
     }
     
@@ -113,6 +115,7 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: UICollectionViewDataSource Methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return count
+        //return (multiSelectDelegate?.selectedIndexPaths().count)!
     }
     
     /// The cell that is returned must be retrieved from a call to -dequeueReusableWithReuseIdentifier:forIndexPath:

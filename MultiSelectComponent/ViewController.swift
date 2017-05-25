@@ -34,18 +34,20 @@ class TestTableViewController: UITableViewController, MultiSelectDelegate {
     override func viewDidLoad() {
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         
-//        for ip in indexPaths {
-//            multiSelectController.addItemToBeSelected(For: ip)
-//        }
+        self.tableView.allowsMultipleSelection = true
+        
     }
     
     /// MultiSelectDelegate Methods
     func selectedIndexPaths() -> [IndexPath] {
-        return indexPaths
+        guard let rows = tableView.indexPathsForSelectedRows else {
+            return []
+        }
+        return rows
     }
     
     func multiSelectSelectedViewRemovedItem(at indexPath:IndexPath) {
-        // ToDo implement
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func multiSelectSelectedViewCell(For indexPath: IndexPath) -> MultiSelectSelectedViewCell {
@@ -56,7 +58,7 @@ class TestTableViewController: UITableViewController, MultiSelectDelegate {
     }
 
     
-    // MARK: - Table view data source
+    // MARK: - TableViewDataSource Methods 
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -73,6 +75,18 @@ class TestTableViewController: UITableViewController, MultiSelectDelegate {
         cell.textLabel?.text = dataArray[indexPath.row]
         
         return cell
-        
     }
+    
+    // MARK: - TableViewDelegate Methods
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        multiSelectController.addItemToBeSelected(For: indexPath)
+    }
+    
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        multiSelectController.removeItemToBeDeselected(For: indexPath)
+    }
+
+
+    
 }
