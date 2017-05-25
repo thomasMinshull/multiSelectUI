@@ -11,9 +11,15 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MultiSelectSelectedViewCellWithButton"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MultiSelectSelectedViewCellWithButton">
+            <connections>
+                <outlet property="deSelectButton" destination="Opu-wT-mf3" id="yds-cP-YiH"/>
+                <outlet property="detailTextLabelOutlet" destination="EtP-VI-Bw6" id="b8E-Ld-ZAU"/>
+                <outlet property="textLabelOutlet" destination="wcO-Fr-hcS" id="X1R-wQ-vLy"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MultiSelectCollectionViewCell" id="OTM-mc-PtZ" customClass="MultiSelectCollectionViewCell" customModule="MultiSelectComponent" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MultiSelectCollectionViewCellWithButton" id="OTM-mc-PtZ">
             <rect key="frame" x="0.0" y="0.0" width="200" height="100"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -29,7 +35,7 @@
                         </constraints>
                         <state key="normal" title="X"/>
                         <connections>
-                            <action selector="deSelectButtonTapped:forEvent:" destination="OTM-mc-PtZ" eventType="touchUpInside" id="khW-Fv-Ugy"/>
+                            <action selector="deSelectButtonTapped:forEvent:" destination="-1" eventType="touchUpInside" id="2rK-w8-uRE"/>
                         </connections>
                     </button>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="LCe-dk-AqN">
@@ -70,11 +76,8 @@
                 <constraint firstItem="Opu-wT-mf3" firstAttribute="leading" secondItem="OTM-mc-PtZ" secondAttribute="leading" id="slW-Wk-Mbm"/>
             </constraints>
             <connections>
-                <outlet property="deSelectButton" destination="Opu-wT-mf3" id="abV-Qy-anS"/>
-                <outlet property="detailTextLabel" destination="EtP-VI-Bw6" id="cL2-lz-r7g"/>
-                <outlet property="detailTextLabelOutlet" destination="EtP-VI-Bw6" id="c7Y-r3-oKI"/>
-                <outlet property="textLabel" destination="wcO-Fr-hcS" id="7eD-dl-4pp"/>
-                <outlet property="textLabelOutlet" destination="wcO-Fr-hcS" id="QCl-ZZ-u6B"/>
+                <outlet property="backgroundView" destination="-1" id="O7g-in-WhE"/>
+                <outlet property="selectedBackgroundView" destination="-1" id="MwR-Mq-ghS"/>
             </connections>
         </collectionViewCell>
     </objects>
