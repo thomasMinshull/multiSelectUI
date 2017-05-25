@@ -12,37 +12,31 @@ class ViewController: UIViewController {
 
     let testTableViewController = TestTableViewController()
 
-    
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let vc = segue.destination as! MultiSelectContoller
-        testTableViewController.multiSelectController = vc // TODO there is got to be better atcatecture than this but lets just get er done
-//        vc.register(MultiSelectSelectedViewCellWithButton.self, forCellWithReuseIdentifier: "MultiSelectCollectionViewCellWithButton")
-        vc.multiSelectDelegate = testTableViewController as MultiSelectDelegate
-//        vc.nestInMultiSelectViewController(childViewController: testTableViewController)
+    @IBAction func buttonTapped(_ sender: Any) {
+        let vc = MultiSelectContoller(nibName: "MultiSelectContoller", bundle: Bundle.main)
+        testTableViewController.multiSelectController = vc
+        vc.multiSelectDelegate = testTableViewController
         vc.nestedViewController = testTableViewController
-     }
+        self.present(vc, animated: true)
+    }
     
     
 }
 
 class TestTableViewController: UITableViewController, MultiSelectDelegate {
     
+    let cellID = "CellID"
+    
     var multiSelectController: MultiSelectContoller!
     let dataArray = ["boo", "yeah", "Seattle Rocks"]
     let indexPaths = [IndexPath(row: 0, section: 0), IndexPath(row: 1, section: 0), IndexPath(row: 2, section: 0)]
-    let reuseID = "MultiSelectCollectionViewCellWithButton"
     
     override func viewDidLoad() {
-//        multiSelectController.register(MultiSelectSelectedViewCellWithButton.self, forCellWithReuseIdentifier: reuseID)
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         
-        for ip in indexPaths {
-            multiSelectController.addItemToBeSelected(For: ip)
-        }
-        
-        
+//        for ip in indexPaths {
+//            multiSelectController.addItemToBeSelected(For: ip)
+//        }
     }
     
     /// MultiSelectDelegate Methods
@@ -55,7 +49,7 @@ class TestTableViewController: UITableViewController, MultiSelectDelegate {
     }
     
     func multiSelectSelectedViewCell(For indexPath: IndexPath) -> MultiSelectSelectedViewCell {
-        let cell = multiSelectController.dequeueReusableMultiSelectSelectedViewCell(with: reuseID, for: indexPath) as! MultiSelectSelectedViewCellWithButton
+        let cell = multiSelectController.dequeueReusableMultiSelectSelectedViewCell(with: MultiSelectCollectionViewCellIdentifier, for: indexPath) as! MultiSelectSelectedViewCellWithButton
         cell.textLabel.text = dataArray[indexPath.row]
         
         return cell
@@ -74,7 +68,7 @@ class TestTableViewController: UITableViewController, MultiSelectDelegate {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         
         cell.textLabel?.text = dataArray[indexPath.row]
         

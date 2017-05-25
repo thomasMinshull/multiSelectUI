@@ -37,7 +37,7 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
     private var count = 0
     
     override func viewDidLoad() {
-        register(MultiSelectSelectedViewCellWithButton.self, forCellWithReuseIdentifier: "MultiSelectCollectionViewCellWithButton")
+        register(MultiSelectSelectedViewCellWithButton.self, forCellWithReuseIdentifier: MultiSelectCollectionViewCellIdentifier) //
         nestInMultiSelectViewController(childViewController: nestedViewController)
     }
     
@@ -103,7 +103,10 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
             fatalError("Attempt to register MultiSelectSelectedViewCell that is not a sublecall of MultiSelectSelectedViewCell")
         }
         
-        collectionView.register(selectedViewCellSubclass.self, forCellWithReuseIdentifier: identifier)
+        // TODO, fix this so nib is also being passed in
+        let nib = UINib(nibName: "MultiSelectSelectedViewCellWithButton", bundle: Bundle.main)
+        collectionView.register(nib, forCellWithReuseIdentifier: identifier)
+
     }
     
     
