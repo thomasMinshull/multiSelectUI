@@ -34,7 +34,6 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
     
     var multiSelectDelegate: MultiSelectDelegate?
     var nestedViewController: UIViewController! //TODO this is just here for testing look to see if three is a better way to do this
-    private var count = 0
     
     override func viewDidLoad() {
         register(MultiSelectSelectedViewCellWithButton.self, forCellWithReuseIdentifier: MultiSelectCollectionViewCellIdentifier) //
@@ -49,7 +48,6 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
         }
         
         if let collectionViewIP = toCollectionViewIndexPath(childVCIndexPath: indexPath) {
-            count = count + 1
             collectionView.insertItems(at: [collectionViewIP])
         }
     }
@@ -64,7 +62,6 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
         // note toCollectionViewIndexPath should return the index path that this childVCIndexPath priviously ocupied, 
         // as long as no other rows from an earlier row/section have been removed since the CollectionView was last updated
         if let collectionViewIP = toCollectionViewIndexPath(childVCIndexPath: indexPath) {
-            count = count - 1
             collectionView.deleteItems(at: [collectionViewIP])
         }
     }
@@ -114,8 +111,7 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: UICollectionViewDataSource Methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return count
-        //return (multiSelectDelegate?.selectedIndexPaths().count)!
+        return (multiSelectDelegate?.selectedIndexPaths().count)!
     }
     
     /// The cell that is returned must be retrieved from a call to -dequeueReusableWithReuseIdentifier:forIndexPath:
