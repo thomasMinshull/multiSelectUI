@@ -10,7 +10,7 @@ import UIKit
 
 //let MultiSelectCollectionViewCellIdentifier = "MultiSelectCollectionViewCell"
 
-class MultiSelectCollectionViewCell: MultiSelectSelectedViewCell {
+class MultiSelectSelectedViewCellWithButton: MultiSelectSelectedViewCell {
     @IBOutlet var textLabelOutlet: UILabel!
     @IBOutlet var detailTextLabelOutlet: UILabel!
     @IBOutlet var deSelectButton: UIButton!

@@ -33,7 +33,13 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet private var containerView: UIView!
     
     var multiSelectDelegate: MultiSelectDelegate?
+    var nestedViewController: UIViewController! //TODO this is just here for testing look to see if three is a better way to do this
     private var count = 0
+    
+    override func viewDidLoad() {
+        register(MultiSelectSelectedViewCellWithButton.self, forCellWithReuseIdentifier: "MultiSelectCollectionViewCellWithButton")
+        nestInMultiSelectViewController(childViewController: nestedViewController)
+    }
     
     /// Call this item to add an item to the MultiSelectSelectedView prior to selecting the item in the childVC
     func addItemToBeSelected(For indexPath: IndexPath) {
@@ -60,7 +66,6 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
 
             count = count - 1
         }
-
     }
     
     func dequeueReusableMultiSelectSelectedViewCell(with reuseIdenfifier: String, for indexPath: IndexPath) -> MultiSelectSelectedViewCell {
@@ -98,7 +103,7 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
             fatalError("Attempt to register MultiSelectSelectedViewCell that is not a sublecall of MultiSelectSelectedViewCell")
         }
         
-        collectionView.register(selectedViewCellSubclass, forCellWithReuseIdentifier: identifier)
+        collectionView.register(selectedViewCellSubclass.self, forCellWithReuseIdentifier: identifier)
     }
     
     

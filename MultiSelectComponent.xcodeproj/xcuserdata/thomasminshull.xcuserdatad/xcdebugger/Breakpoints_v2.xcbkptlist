@@ -2,4 +2,182 @@
 <Bucket
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MultiSelectComponent/MultiSelectController.swift"
+            timestampString = "517423004.452782"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "addItemToBeSelected(For:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MultiSelectComponent.MultiSelectContoller.addItemToBeSelected (For : Foundation.IndexPath) -&gt; ()"
+                  moduleName = "MultiSelectComponent"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/thomasminshull/Dev/MultiSelectUI/MultiSelectComponent/MultiSelectController.swift"
+                  timestampString = "517422782.174901"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "19">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MultiSelectComponent.MultiSelectContoller.addItemToBeSelected (For : Foundation.IndexPath) -&gt; ()"
+                  moduleName = "MultiSelectComponent"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/thomasminshull/Dev/MultiSelectUI/MultiSelectComponent/MultiSelectController.swift"
+                  timestampString = "517422782.178715"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "55">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MultiSelectComponent/MultiSelectController.swift"
+            timestampString = "517423004.452782"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "removeItemToBeDeselected(For:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MultiSelectComponent.MultiSelectContoller.removeItemToBeDeselected (For : Foundation.IndexPath) -&gt; ()"
+                  moduleName = "MultiSelectComponent"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/thomasminshull/Dev/MultiSelectUI/MultiSelectComponent/MultiSelectController.swift"
+                  timestampString = "517422782.19388"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "57"
+                  endingLineNumber = "57"
+                  offsetFromSymbolStart = "19">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MultiSelectComponent.MultiSelectContoller.removeItemToBeDeselected (For : Foundation.IndexPath) -&gt; ()"
+                  moduleName = "MultiSelectComponent"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/thomasminshull/Dev/MultiSelectUI/MultiSelectComponent/MultiSelectController.swift"
+                  timestampString = "517422782.196388"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "57"
+                  endingLineNumber = "57"
+                  offsetFromSymbolStart = "55">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MultiSelectComponent/MultiSelectController.swift"
+            timestampString = "517423004.452782"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "dequeueReusableMultiSelectSelectedViewCell(with:for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MultiSelectComponent/MultiSelectController.swift"
+            timestampString = "517423004.452782"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
+            landmarkName = "register(_:forCellWithReuseIdentifier:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MultiSelectComponent/MultiSelectController.swift"
+            timestampString = "517423004.452782"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
+            landmarkName = "register(_:forCellWithReuseIdentifier:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MultiSelectComponent.MultiSelectContoller.register (Swift.Optional&lt;Swift.AnyObject.Type&gt;, forCellWithReuseIdentifier : Swift.String) -&gt; ()"
+                  moduleName = "MultiSelectComponent"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/thomasminshull/Dev/MultiSelectUI/MultiSelectComponent/MultiSelectController.swift"
+                  timestampString = "517422782.205281"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "34">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MultiSelectComponent.MultiSelectContoller.register (Swift.Optional&lt;Swift.AnyObject.Type&gt;, forCellWithReuseIdentifier : Swift.String) -&gt; ()"
+                  moduleName = "MultiSelectComponent"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/thomasminshull/Dev/MultiSelectUI/MultiSelectComponent/MultiSelectController.swift"
+                  timestampString = "517422782.207328"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "70">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
