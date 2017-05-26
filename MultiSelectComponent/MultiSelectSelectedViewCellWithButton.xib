@@ -20,16 +20,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="nVb-3N-Hzd">
-                        <rect key="frame" x="74" y="0.0" width="222" height="139"/>
+                        <rect key="frame" x="80" y="0.0" width="216" height="139"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FDW-ds-jiC">
-                                <rect key="frame" x="0.0" y="0.0" width="222" height="69.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="216" height="69.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fw2-07-vym">
-                                <rect key="frame" x="0.0" y="69.5" width="222" height="69.5"/>
+                                <rect key="frame" x="0.0" y="69.5" width="216" height="69.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -43,7 +43,7 @@
                         </constraints>
                     </stackView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RO2-wr-Dd5">
-                        <rect key="frame" x="0.0" y="0.0" width="74" height="139"/>
+                        <rect key="frame" x="0.0" y="0.0" width="72" height="139"/>
                         <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="3WF-jQ-xqW"/>
@@ -56,10 +56,9 @@
                     </button>
                 </subviews>
             </view>
-            <color key="backgroundColor" red="0.90980392160000001" green="0.3411764706" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <constraints>
-                <constraint firstItem="nVb-3N-Hzd" firstAttribute="leading" secondItem="RO2-wr-Dd5" secondAttribute="trailing" id="04c-gK-tIt"/>
-                <constraint firstItem="nVb-3N-Hzd" firstAttribute="leading" secondItem="RO2-wr-Dd5" secondAttribute="trailing" id="2Fp-mt-uNw"/>
+                <constraint firstItem="nVb-3N-Hzd" firstAttribute="leading" secondItem="RO2-wr-Dd5" secondAttribute="trailing" constant="8" id="04c-gK-tIt"/>
                 <constraint firstAttribute="bottom" secondItem="nVb-3N-Hzd" secondAttribute="bottom" id="Bhr-9o-1ja"/>
                 <constraint firstAttribute="trailing" secondItem="nVb-3N-Hzd" secondAttribute="trailing" id="CTo-J3-vrQ"/>
                 <constraint firstAttribute="bottom" secondItem="RO2-wr-Dd5" secondAttribute="bottom" id="CWg-xt-O5w"/>
