@@ -8,6 +8,8 @@
 
 import UIKit
 
+let MultiSelectCollectionViewCellIdentifier = "MultiSelectCollectionViewCellWithButton"
+
 class MultiSelectSelectedViewCellWithButton: MultiSelectSelectedViewCell {
     
     @IBOutlet var textLabelOutlet: UILabel!

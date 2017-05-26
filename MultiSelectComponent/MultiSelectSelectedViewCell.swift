@@ -12,9 +12,6 @@ class MultiSelectSelectedViewCell: UICollectionViewCell {
     
     @IBOutlet var titleLabel: UILabel!
     
-    
-    
-    
     var textLabel: UILabel! {
         get {
             return self.textLabel
