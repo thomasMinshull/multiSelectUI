@@ -2,38 +2,39 @@
 //  MultiSelectSelectedViewCellWithButton.swift
 //  MultiSelectComponent
 //
-//  Created by ThomasMinshull on 2017-05-26.
+//  Created by ThomasMinshull on 2017-05-16.
 //  Copyright © 2017 DrBill. All rights reserved.
 //
 
 import UIKit
 
-class MultiSelectSelectedViewCellWithButton: MultiSelectSelectedViewCell {
-    
+let MultiSelectCollectionViewCellIdentifier = "MultiSelectCollectionViewCellWithButton"
+
+class MultiSelectSelectedViewCellWithButtonOld: MultiSelectSelectedViewCell {
     @IBOutlet var textLabelOutlet: UILabel!
     @IBOutlet var detailTextLabelOutlet: UILabel!
-    @IBOutlet var deselectButton: UIButton!
-
+    @IBOutlet var deSelectButton: UIButton!
+    
     override var textLabel: UILabel! {
         get {
-            return self.textLabelOutlet
+            return textLabelOutlet
         }
         
         set {
-            self.textLabelOutlet = newValue
+            textLabelOutlet = newValue
         }
     }
     
     override var detailTextLabel: UILabel! {
         get {
-            return self.detailTextLabelOutlet
+            return detailTextLabelOutlet
         }
         
         set {
-            self.detailTextLabelOutlet = newValue
+            detailTextLabelOutlet = newValue
         }
     }
-
+    
     @IBAction func deSelectButtonTapped(_ sender: Any, forEvent event: UIEvent) {
         // pass touch event up the responder chain
         guard let touches = event.allTouches else { return }
@@ -70,11 +71,12 @@ class MultiSelectSelectedViewCellWithButton: MultiSelectSelectedViewCell {
     
     private func wasButtonTapped(_ touches: Set<UITouch>, with event: UIEvent?) -> Bool {
         for touch in touches {
-            if (hitTest(touch.location(in: contentView), with: event) == deselectButton.imageView) {
+            if (hitTest(touch.location(in: contentView), with: event) == deSelectButton.imageView) {
                 return true
             }
         }
         return false
     }
-
 }
+
+

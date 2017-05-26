@@ -15,9 +15,11 @@
 		554766D91EC6751300DC47A9 /* MultiSelectComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554766D81EC6751300DC47A9 /* MultiSelectComponentTests.swift */; };
 		554766E41EC6758200DC47A9 /* MultiSelectContoller.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554766E31EC6758200DC47A9 /* MultiSelectContoller.xib */; };
 		554766E61EC6794500DC47A9 /* MultiSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554766E51EC6794500DC47A9 /* MultiSelectController.swift */; };
-		55D52BCB1ECB9116008051A7 /* MultiSelectSelectedViewCellWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D52BCA1ECB9116008051A7 /* MultiSelectSelectedViewCellWithButton.swift */; };
+		55D190811ED8B68B00352F43 /* MultiSelectSelectedViewCellWithButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55D190801ED8B68B00352F43 /* MultiSelectSelectedViewCellWithButton.xib */; };
+		55D190831ED8B71000352F43 /* MultiSelectSelectedViewCellWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D190821ED8B71000352F43 /* MultiSelectSelectedViewCellWithButton.swift */; };
+		55D52BCB1ECB9116008051A7 /* MultiSelectSelectedViewCellWithButtonOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D52BCA1ECB9116008051A7 /* MultiSelectSelectedViewCellWithButtonOld.swift */; };
 		55D52BCD1ECB9186008051A7 /* MultiSelectSelectedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D52BCC1ECB9186008051A7 /* MultiSelectSelectedViewCell.swift */; };
-		55D52BCF1ECB9E96008051A7 /* MultiSelectSelectedViewCellWithButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55D52BCE1ECB9E96008051A7 /* MultiSelectSelectedViewCellWithButton.xib */; };
+		55D52BCF1ECB9E96008051A7 /* MultiSelectSelectedViewCellWithButtonOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55D52BCE1ECB9E96008051A7 /* MultiSelectSelectedViewCellWithButtonOld.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,9 +45,11 @@
 		554766DA1EC6751300DC47A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		554766E31EC6758200DC47A9 /* MultiSelectContoller.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiSelectContoller.xib; sourceTree = "<group>"; };
 		554766E51EC6794500DC47A9 /* MultiSelectController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiSelectController.swift; sourceTree = "<group>"; };
-		55D52BCA1ECB9116008051A7 /* MultiSelectSelectedViewCellWithButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiSelectSelectedViewCellWithButton.swift; sourceTree = "<group>"; };
+		55D190801ED8B68B00352F43 /* MultiSelectSelectedViewCellWithButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiSelectSelectedViewCellWithButton.xib; sourceTree = "<group>"; };
+		55D190821ED8B71000352F43 /* MultiSelectSelectedViewCellWithButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiSelectSelectedViewCellWithButton.swift; sourceTree = "<group>"; };
+		55D52BCA1ECB9116008051A7 /* MultiSelectSelectedViewCellWithButtonOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiSelectSelectedViewCellWithButtonOld.swift; sourceTree = "<group>"; };
 		55D52BCC1ECB9186008051A7 /* MultiSelectSelectedViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiSelectSelectedViewCell.swift; sourceTree = "<group>"; };
-		55D52BCE1ECB9E96008051A7 /* MultiSelectSelectedViewCellWithButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiSelectSelectedViewCellWithButton.xib; sourceTree = "<group>"; };
+		55D52BCE1ECB9E96008051A7 /* MultiSelectSelectedViewCellWithButtonOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiSelectSelectedViewCellWithButtonOld.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,10 +94,12 @@
 				554766C31EC6751200DC47A9 /* AppDelegate.swift */,
 				554766C51EC6751200DC47A9 /* ViewController.swift */,
 				554766E51EC6794500DC47A9 /* MultiSelectController.swift */,
-				55D52BCA1ECB9116008051A7 /* MultiSelectSelectedViewCellWithButton.swift */,
+				55D52BCA1ECB9116008051A7 /* MultiSelectSelectedViewCellWithButtonOld.swift */,
 				55D52BCC1ECB9186008051A7 /* MultiSelectSelectedViewCell.swift */,
+				55D190821ED8B71000352F43 /* MultiSelectSelectedViewCellWithButton.swift */,
 				554766E31EC6758200DC47A9 /* MultiSelectContoller.xib */,
-				55D52BCE1ECB9E96008051A7 /* MultiSelectSelectedViewCellWithButton.xib */,
+				55D52BCE1ECB9E96008051A7 /* MultiSelectSelectedViewCellWithButtonOld.xib */,
+				55D190801ED8B68B00352F43 /* MultiSelectSelectedViewCellWithButton.xib */,
 				554766C71EC6751200DC47A9 /* Main.storyboard */,
 				554766CA1EC6751200DC47A9 /* Assets.xcassets */,
 				554766CC1EC6751200DC47A9 /* LaunchScreen.storyboard */,
@@ -199,8 +205,9 @@
 				554766CE1EC6751200DC47A9 /* LaunchScreen.storyboard in Resources */,
 				554766CB1EC6751200DC47A9 /* Assets.xcassets in Resources */,
 				554766C91EC6751200DC47A9 /* Main.storyboard in Resources */,
-				55D52BCF1ECB9E96008051A7 /* MultiSelectSelectedViewCellWithButton.xib in Resources */,
+				55D52BCF1ECB9E96008051A7 /* MultiSelectSelectedViewCellWithButtonOld.xib in Resources */,
 				554766E41EC6758200DC47A9 /* MultiSelectContoller.xib in Resources */,
+				55D190811ED8B68B00352F43 /* MultiSelectSelectedViewCellWithButton.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,10 +226,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				554766E61EC6794500DC47A9 /* MultiSelectController.swift in Sources */,
-				55D52BCB1ECB9116008051A7 /* MultiSelectSelectedViewCellWithButton.swift in Sources */,
+				55D52BCB1ECB9116008051A7 /* MultiSelectSelectedViewCellWithButtonOld.swift in Sources */,
 				554766C61EC6751200DC47A9 /* ViewController.swift in Sources */,
 				554766C41EC6751200DC47A9 /* AppDelegate.swift in Sources */,
 				55D52BCD1ECB9186008051A7 /* MultiSelectSelectedViewCell.swift in Sources */,
+				55D190831ED8B71000352F43 /* MultiSelectSelectedViewCellWithButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

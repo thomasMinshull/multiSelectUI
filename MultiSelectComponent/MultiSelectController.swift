@@ -14,7 +14,7 @@ protocol MultiSelectDelegate { // nested VC must implement these methods
     func selectedIndexPaths() -> [IndexPath]
     
     /// Is called when the multiSelectSelectedViewCell is removed from the multiSelectSelectedView is passed in a childVCIndexPath
-    func multiSelectSelectedViewRemovedItem(at indexPath:IndexPath)
+    func multiSelectSelectedViewWillRemovedItem(at indexPath:IndexPath)
     
     /// The cell that is returned must be retrieved from a call to -dequeueReusableMultiSelectSelectedViewCellWithReuseIdentifier:forIndexPath:
     func multiSelectSelectedViewCell(For indexPath: IndexPath) -> MultiSelectSelectedViewCell
@@ -125,6 +125,15 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
 //        }
         
         return (multiSelectDelegate?.multiSelectSelectedViewCell(For: indexPath))!
+    }
+    
+    // MARK: UICollectionViewDataSource Methods 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let childViewIP = toChildVCIndexPath(collectionViewIndexPath: indexPath) {
+            multiSelectDelegate?.multiSelectSelectedViewWillRemovedItem(at: childViewIP)
+            removeItemToBeDeselected(For: indexPath)
+        }
+        
     }
 
     // MARK: Helper method

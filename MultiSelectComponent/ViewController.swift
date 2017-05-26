@@ -45,7 +45,7 @@ class TestTableViewController: UITableViewController, MultiSelectDelegate {
         return rows
     }
     
-    func multiSelectSelectedViewRemovedItem(at indexPath:IndexPath) {
+    func multiSelectSelectedViewWillRemovedItem(at indexPath:IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
