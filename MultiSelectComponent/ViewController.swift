@@ -15,12 +15,11 @@ class ViewController: UIViewController {
     @IBAction func buttonTapped(_ sender: Any) {
         let vc = MultiSelectContoller(nibName: "MultiSelectContoller", bundle: Bundle.main)
         testTableViewController.multiSelectController = vc
+        
         vc.multiSelectDelegate = testTableViewController
-        vc.nestedViewController = testTableViewController
+        
         self.present(vc, animated: true)
     }
-    
-    
 }
 
 class TestTableViewController: UITableViewController, MultiSelectDelegate {
@@ -34,10 +33,18 @@ class TestTableViewController: UITableViewController, MultiSelectDelegate {
     override func viewDidLoad() {
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         self.tableView.allowsMultipleSelection = true
-        
     }
     
     /// MultiSelectDelegate Methods
+    func registerCells(multiSelectController: MultiSelectContoller) {
+        let nib = UINib(nibName: "MultiSelectSelectedViewCellWithButton", bundle: Bundle.main)
+        multiSelectController.registerMultiSelectSelectedViewCell(nib, forCellReuseIdentifier: MultiSelectCollectionViewCellIdentifier)
+    }
+    
+    func viewControllerToBeNested() -> UIViewController {
+        return self
+    }
+    
     func selectedIndexPaths() -> [IndexPath] {
         guard let rows = tableView.indexPathsForSelectedRows else {
             return []
@@ -76,13 +83,14 @@ class TestTableViewController: UITableViewController, MultiSelectDelegate {
         return cell
     }
     
+    
     // MARK: - TableViewDelegate Methods
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        multiSelectController.addItemToBeSelected(For: indexPath)
+        multiSelectController.addItemToBeSelected(For: indexPath) // TODO should there be another delegate for ChildView to send messages to multiSelectController?
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        multiSelectController.removeItemToBeDeselected(For: indexPath)
+        multiSelectController.removeItemToBeDeselected(For: indexPath) // TODO should there be another delegate for ChildView to send messages to multiSelectController?
     }
 }

@@ -9,16 +9,21 @@
 import UIKit
 
 
-protocol MultiSelectDelegate { // nested VC must implement these methods
+protocol MultiSelectDelegate {
+    
+    func registerCells(multiSelectController: MultiSelectContoller)
+    func viewControllerToBeNested() -> UIViewController
     
     func selectedIndexPaths() -> [IndexPath]
     
-    /// Is called when the multiSelectSelectedViewCell is removed from the multiSelectSelectedView is passed in a childVCIndexPath
+    /// Is called when the multiSelectSelectedViewCell will be removed from the multiSelectSelectedView 
+    /// MultiSelectDelegate must remove this item from the selectedIndexPaths at this point
     func multiSelectSelectedViewWillRemovedItem(at indexPath:IndexPath)
     
     /// The cell that is returned must be retrieved from a call to -dequeueReusableMultiSelectSelectedViewCellWithReuseIdentifier:forIndexPath:
     func multiSelectSelectedViewCell(For indexPath: IndexPath) -> MultiSelectSelectedViewCell
 }
+
 
 class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -33,11 +38,10 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet private var containerView: UIView!
     
     var multiSelectDelegate: MultiSelectDelegate?
-    var nestedViewController: UIViewController! //TODO this is just here for testing look to see if three is a better way to do this
     
     override func viewDidLoad() {
-        let nib = UINib(nibName: "MultiSelectSelectedViewCellWithButton", bundle: Bundle.main)
-        registerMultiSelectSelectedViewCell(nib, forCellReuseIdentifier: MultiSelectCollectionViewCellIdentifier)
+        multiSelectDelegate?.registerCells(multiSelectController: self)
+        let nestedViewController = (multiSelectDelegate?.viewControllerToBeNested())!
         nestInMultiSelectViewController(childViewController: nestedViewController)
     }
     
@@ -98,17 +102,12 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func register(_ multiSelectSelectedViewCellSubclass: AnyClass?,
-                  forCellWithReuseIdentifier identifier: String) {
+                  forCellWithReuseIdentifier identifier: String) { //TODO needs to be tested end to end
         guard let selectedViewCellSubclass = multiSelectSelectedViewCellSubclass, (selectedViewCellSubclass.isSubclass(of: MultiSelectSelectedViewCell.self)) else {
             fatalError("Attempt to register MultiSelectSelectedViewCell that is not a sublecall of MultiSelectSelectedViewCell")
         }
         
-//        // TODO, fix this so nib is also being passed in
-//        let nib = UINib(nibName: "MultiSelectSelectedViewCellWithButton", bundle: Bundle.main)
-//        collectionView.register(nib, forCellWithReuseIdentifier: identifier)
-
-        
-        
+        collectionView.register(selectedViewCellSubclass, forCellWithReuseIdentifier: identifier)
     }
     
     
@@ -120,11 +119,11 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
     /// The cell that is returned must be retrieved from a call to -dequeueReusableWithReuseIdentifier:forIndexPath:
     /// only the collectionView should call this method. IndexPath must be a MultiSelectSelectedView indexPath
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        guard let childVCIndexPath = toChildVCIndexPath(collectionViewIndexPath: indexPath) else {
-//            fatalError("IndexPath for MultiSelectController could not be converted into a childViewController IndexPath")
-//        }
+        guard let childVCIndexPath = toChildVCIndexPath(collectionViewIndexPath: indexPath) else {
+            fatalError("IndexPath for MultiSelectController could not be converted into a childViewController IndexPath")
+        }
         
-        return (multiSelectDelegate?.multiSelectSelectedViewCell(For: indexPath))!
+        return (multiSelectDelegate?.multiSelectSelectedViewCell(For: childVCIndexPath))!
     }
     
     // MARK: UICollectionViewDataSource Methods 
