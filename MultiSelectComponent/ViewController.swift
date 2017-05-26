@@ -33,7 +33,6 @@ class TestTableViewController: UITableViewController, MultiSelectDelegate {
     
     override func viewDidLoad() {
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
-        
         self.tableView.allowsMultipleSelection = true
         
     }
@@ -86,7 +85,4 @@ class TestTableViewController: UITableViewController, MultiSelectDelegate {
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         multiSelectController.removeItemToBeDeselected(For: indexPath)
     }
-
-
-    
 }

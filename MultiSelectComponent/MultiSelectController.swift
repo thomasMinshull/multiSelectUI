@@ -36,7 +36,8 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
     var nestedViewController: UIViewController! //TODO this is just here for testing look to see if three is a better way to do this
     
     override func viewDidLoad() {
-        register(MultiSelectSelectedViewCellWithButton.self, forCellWithReuseIdentifier: MultiSelectCollectionViewCellIdentifier) //
+        let nib = UINib(nibName: "MultiSelectSelectedViewCellWithButton", bundle: Bundle.main)
+        registerMultiSelectSelectedViewCell(nib, forCellReuseIdentifier: MultiSelectCollectionViewCellIdentifier)
         nestInMultiSelectViewController(childViewController: nestedViewController)
     }
     
@@ -93,7 +94,7 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: Register MultiSelectSelectedViewCells
     func registerMultiSelectSelectedViewCell(_ nib: UINib?, forCellReuseIdentifier identifier: String) {
-        collectionView.register(nib, forCellWithReuseIdentifier: identifier)
+        collectionView.register(nib!, forCellWithReuseIdentifier: identifier)
     }
     
     func register(_ multiSelectSelectedViewCellSubclass: AnyClass?,
@@ -102,10 +103,12 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
             fatalError("Attempt to register MultiSelectSelectedViewCell that is not a sublecall of MultiSelectSelectedViewCell")
         }
         
-        // TODO, fix this so nib is also being passed in
-        let nib = UINib(nibName: "MultiSelectSelectedViewCellWithButton", bundle: Bundle.main)
-        collectionView.register(nib, forCellWithReuseIdentifier: identifier)
+//        // TODO, fix this so nib is also being passed in
+//        let nib = UINib(nibName: "MultiSelectSelectedViewCellWithButton", bundle: Bundle.main)
+//        collectionView.register(nib, forCellWithReuseIdentifier: identifier)
 
+        
+        
     }
     
     
@@ -117,11 +120,11 @@ class MultiSelectContoller: UIViewController, UICollectionViewDelegate, UICollec
     /// The cell that is returned must be retrieved from a call to -dequeueReusableWithReuseIdentifier:forIndexPath:
     /// only the collectionView should call this method. IndexPath must be a MultiSelectSelectedView indexPath
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let childVCIndexPath = toChildVCIndexPath(collectionViewIndexPath: indexPath) else {
-            fatalError("IndexPath for MultiSelectController could not be converted into a childViewController IndexPath")
-        }
+//        guard let childVCIndexPath = toChildVCIndexPath(collectionViewIndexPath: indexPath) else {
+//            fatalError("IndexPath for MultiSelectController could not be converted into a childViewController IndexPath")
+//        }
         
-        return multiSelectDelegate?.multiSelectSelectedViewCell(For: childVCIndexPath) as UICollectionViewCell!
+        return (multiSelectDelegate?.multiSelectSelectedViewCell(For: indexPath))!
     }
 
     // MARK: Helper method
